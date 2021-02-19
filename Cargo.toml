@@ -1,5 +1,5 @@
 [package]
-name = "rust_practice"
+name = "rust_stuff"
 version = "0.1.0"
 authors = ["ekoreman <Elijah.Koreman@aexp.com>"]
 edition = "2018"
