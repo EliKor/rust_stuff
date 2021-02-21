@@ -1,6 +1,7 @@
-use std::collections::BinaryHeap;
 use std::cmp::Reverse;
+use std::collections::BinaryHeap;
 
+#[derive(Debug)]
 struct MedianList {
     pub median: Option<u32>,
     min_heap: BinaryHeap<Reverse<u32>>,
@@ -15,52 +16,58 @@ impl MedianList {
             max_heap: BinaryHeap::new(),
         }
     }
-    
+
     pub fn insert(&mut self, x: u32) {
         match (self.median, self.min_heap.peek(), self.max_heap.peek()) {
-            (None, None, None) => { 
+            (None, None, None) => {
                 self.median = Some(x);
             }
             (None, Some(Reverse(greater)), Some(lesser)) => {
                 if *lesser <= x && x <= *greater {
                     self.median = Some(x);
-                }
-                else if x <= *lesser {
+                } else if x <= *lesser {
                     self.median = Some(*lesser);
                     self.max_heap.pop();
                     self.max_heap.push(x);
-                }
-                else {
+                } else {
                     self.median = Some(*greater);
                     self.min_heap.pop();
                     self.min_heap.push(Reverse(x));
                 }
             }
-            (Some(old_median), _, _) => { 
-                let greater = { if x > old_median { x } else { old_median } };
-                let lesser = { if x > old_median { old_median } else { x } };
+            (Some(old_median), _, _) => {
+                let greater = {
+                    if x > old_median {
+                        x
+                    } else {
+                        old_median
+                    }
+                };
+                let lesser = {
+                    if x > old_median {
+                        old_median
+                    } else {
+                        x
+                    }
+                };
                 self.median = None;
                 self.min_heap.push(Reverse(greater));
                 self.max_heap.push(lesser);
             }
-            _ => panic!("Median list is not in a valid state")
+            _ => panic!("Median list is not in a valid state"),
         }
     }
 
     pub fn get_median(&self) -> Option<f32> {
         match (self.median, self.min_heap.peek(), self.max_heap.peek()) {
-            (Some(median), _, _) => {
-                Some(median as f32)
-            }
+            (Some(median), _, _) => Some(median as f32),
             (_, Some(Reverse(greater)), Some(lesser)) => {
                 Some((*greater as f32 + *lesser as f32) / 2.0)
             }
-            _ => None
+            _ => None,
         }
     }
-
 }
-
 
 #[cfg(test)]
 mod test {
@@ -87,8 +94,8 @@ mod test {
         assert_eq!(ml.get_median(), Some(4.5));
     }
 }
-    
 
+#[allow(dead_code)]
 fn main() {
     println!("Nothing in main right now :(");
 }
