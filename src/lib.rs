@@ -1,2 +1,10 @@
+pub mod all_unique_cycles;
 pub mod binary_tree_path;
+pub mod longest_valid_parens;
 pub mod median_list;
+pub mod redundant_connections_ii;
+pub mod search_suggestions_system;
+pub mod stocks;
+pub mod trap_water;
+pub mod trie;
+pub mod union_find;
